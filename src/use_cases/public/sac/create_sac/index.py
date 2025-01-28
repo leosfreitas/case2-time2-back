@@ -7,6 +7,6 @@ router = APIRouter()
 
 create_sac_use_case = CreateSacUseCase(SacRepository())
 
-@router.post("/public/create-sac")
+@router.post("/sac/create")
 def create_sac(create_finance_dto:CreateSacDTO, response:Response, request:Request):
     return create_sac_use_case.execute(create_finance_dto, response, request)
