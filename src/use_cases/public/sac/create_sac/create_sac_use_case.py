@@ -15,7 +15,8 @@ class CreateSacUseCase:
             nome=create_sac_dto.nome,
             email=create_sac_dto.email,
             motivo=create_sac_dto.motivo,
-            mensagem=create_sac_dto.mensagem
+            mensagem=create_sac_dto.mensagem,
+            resposta=create_sac_dto.resposta
         )
 
         self.sac_respository.save(sac)

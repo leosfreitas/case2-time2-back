@@ -6,3 +6,4 @@ class CreateSacDTO(BaseModel):
     email: str
     motivo: str
     mensagem: str
+    resposta: Optional[str]

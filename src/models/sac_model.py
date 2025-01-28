@@ -18,6 +18,7 @@ class SacModel(Document):
     email = StringField(required=True)
     motivo = StringField(required=True)
     mensagem = StringField(required=True)
+    resposta = StringField(required=False)
 
     def get_normal_fields():
         return [i for i in SacModel.__dict__.keys() if i[:1] != '_' and i != "sensivity_fields" and i not in SacModel.sensivity_fields]
