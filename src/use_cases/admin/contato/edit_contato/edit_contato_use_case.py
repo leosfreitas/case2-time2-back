@@ -13,13 +13,14 @@ class EditContatoUseCase:
             return {"status": "error", "message": "ID de contato inválido."}
 
         if not any([
-            edit_contato_dto.mensagem,
+            edit_contato_dto.resposta,
         ]):
             response.status_code = 406
             return {"status": "error", "message": "Nenhuma informação enviada para editar o contato."}
 
-        atualizado = self.contato_repository.update_contato(
-            mensagem=edit_contato_dto.mensagem,
+        atualizado = self.contato_repository.update_contato_resposta(
+            contato_id=contato_id,
+            resposta=edit_contato_dto.resposta,
         )
 
         if not atualizado:
