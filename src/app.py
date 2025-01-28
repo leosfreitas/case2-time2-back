@@ -8,7 +8,7 @@ from importlib import import_module
 
 dotenv.load_dotenv()
 
-connect(host=f"mongodb+srv://{os.getenv('MONGO_USER')}:{os.getenv('MONGO_PWD')}@insperjr.irxsm.mongodb.net/")
+connect(host=f"mongodb+srv://{os.getenv('MONGO_USER')}:{os.getenv('MONGO_PWD')}@inspejr-case2.irxsm.mongodb.net/")
 
 app = FastAPI()
 
