@@ -19,6 +19,7 @@ class PacoteModel(Document):
         StringField(choices=["Residencial", "Movel", "Fixa"]),
         required=True
     )
+    cliente = StringField(choices=["Pessoa", "Empresa"], required=True)
     preco = StringField(required=True)
     cortesia = StringField(required=False)
     nome = StringField(required=True)

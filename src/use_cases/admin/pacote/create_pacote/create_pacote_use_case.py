@@ -11,6 +11,7 @@ class CreatePacoteUseCase:
         # Cria o Pydantic Pacote (que roda a validação do .model_validator)
         pacote = Pacote(
             tipo=create_pacote_dto.tipo,
+            cliente=create_pacote_dto.cliente,
             preco=create_pacote_dto.preco,
             cortesia=create_pacote_dto.cortesia,
             nome=create_pacote_dto.nome,

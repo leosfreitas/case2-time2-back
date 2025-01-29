@@ -22,6 +22,7 @@ class Pacote(BaseModel):
     _id: Optional[str] = None
     
     tipo: List[Literal["Residencial", "Movel", "Fixa"]]
+    cliente: Literal["Pessoa", "Empresa"]
     preco: str
     cortesia: str
     nome: str

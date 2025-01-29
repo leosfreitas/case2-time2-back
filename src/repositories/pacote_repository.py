@@ -60,6 +60,7 @@ class PacoteRepository:
     def update_pacote(
         self,
         pacote_id: str,
+        cliente: Optional[str] = None,
         tipo: Optional[List[str]] = None,
         preco: Optional[str] = None,
         cortesia: Optional[str] = None,
@@ -78,6 +79,8 @@ class PacoteRepository:
             return False
 
         # Atualiza os campos enviados
+        if cliente:
+            pacote_model.cliente = cliente
         if tipo:
             pacote_model.tipo = tipo
         if preco:

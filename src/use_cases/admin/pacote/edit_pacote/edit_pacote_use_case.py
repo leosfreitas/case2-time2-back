@@ -12,12 +12,13 @@ class EditPacoteUseCase:
             response.status_code = 400
             return {"status": "error", "message": "ID de pacote inválido."}
 
-        if not any([edit_pacote_dto.tipo, edit_pacote_dto.preco, edit_pacote_dto.cortesia, edit_pacote_dto.nome, edit_pacote_dto.detalhes]):
+        if not any([edit_pacote_dto.tipo, edit_pacote_dto.cliente, edit_pacote_dto.preco, edit_pacote_dto.cortesia, edit_pacote_dto.nome, edit_pacote_dto.detalhes]):
             response.status_code = 406
             return {"status": "error", "message": "Nenhuma informação enviada para editar o pacote."}
 
         pacote_atualizado = self.pacote_repository.update_pacote(
             pacote_id=pacote_id,
+            cliente = edit_pacote_dto.cliente,
             tipo=edit_pacote_dto.tipo,
             preco=edit_pacote_dto.preco,
             cortesia=edit_pacote_dto.cortesia,
