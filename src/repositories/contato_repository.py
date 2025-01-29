@@ -104,3 +104,15 @@ class ContatoRepository:
         contato_dict = contato.to_mongo().to_dict()
         contato_dict['_id'] = str(contato_dict['_id'])
         return contato_dict
+    
+    def get_all_contatos_by_user_id(self, user_id: str) -> List[dict]:
+        """
+        Retorna uma lista de dicionários com todos os contatos do usuário.
+        """
+        contatos = ContatoModel.objects(user_id=user_id)
+        contatos_dict = []
+        for c in contatos:
+            c_dict = c.to_mongo().to_dict()
+            c_dict['_id'] = str(c_dict['_id'])
+            contatos_dict.append(c_dict)
+        return contatos_dict    

@@ -20,10 +20,10 @@ class GetContatoUseCase:
             response.status_code = 404
             return {"status": "error", "message": "Usuário não encontrado"}
 
-        contato = self.contatos_repository.get_contato_by_user_id(user_id)
-        if contato is None:
-            response.status_code = 200
-            return []  
+        contato = self.contatos_repository.get_all_contatos_by_user_id(user_id)
+        if not contato:
+            response.status_code = 404
+            return {"status": "error", "message": "Nenhum contato encontrado."}
 
         response.status_code = 200
         return contato
