@@ -9,7 +9,7 @@ password = os.environ.get("GMAIL_PASSWORD")
 def send_email(email, content):
     # Cria uma mensagem multipart para suportar HTML
     msg = MIMEMultipart("alternative")
-    msg['Subject'] = "FinTrack - Redefinição de senha"  
+    msg['Subject'] = "TeleConnect - Redefinição de senha"  
     msg['From'] = sender  
     msg['To'] = email  
 
