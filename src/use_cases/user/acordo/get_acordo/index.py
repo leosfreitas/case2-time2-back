@@ -1,5 +1,3 @@
-# use_cases/acordo/get_acordos_by_logged_user/index.py
-
 from fastapi import APIRouter, Request, Response, Depends
 from .get_acordo_use_case import GetAcordosByLoggedUserUseCase
 from repositories.acordo_repository import AcordoRepository

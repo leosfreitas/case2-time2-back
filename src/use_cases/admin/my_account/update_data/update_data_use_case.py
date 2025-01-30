@@ -9,15 +9,15 @@ class UpdateDataUseCase:
         self.user_repository = user_repository
 
     def execute(self, update_data_dto: UpdateDataDTO, response: Response, request: Request):
-        user_id = request.state.auth_payload["user_id"]
+        admin_id = request.state.auth_payload["admin_id"]
         if not update_data_dto.name or not update_data_dto.email:
             response.status_code = 406
             return{"status": "error", "message": "Alteração não realizada, pois falta informações"}
 
-        self.user_repository.update_name(user_id, update_data_dto.name)
-        self.user_repository.update_email(user_id, update_data_dto.email)
-        self.user_repository.update_cpf(user_id, update_data_dto.cpf)
-        self.user_repository.update_phone(user_id, update_data_dto.phone)
+        self.user_repository.update_name(admin_id, update_data_dto.name)
+        self.user_repository.update_email(admin_id, update_data_dto.email)
+        self.user_repository.update_cpf(admin_id, update_data_dto.cpf)
+        self.user_repository.update_phone(admin_id, update_data_dto.phone)
 
         response.status_code = 202
         return{"status": "success", "message": "Atualização do cadastro realizado com sucesso"}

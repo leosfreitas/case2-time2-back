@@ -1,7 +1,7 @@
 import os
 import bcrypt
 import dotenv
-from typing import List
+from typing import List, Optional
 from mongoengine import *
 from cryptography.fernet import Fernet
 from entities.user import User
@@ -17,15 +17,21 @@ class UsersRepository:
         user_dict = user.model_dump()
 
         for k in UserModel.get_normal_fields():
-            if (k not in user_dict):
+            if k not in user_dict:
                 continue
-
             user_model[k] = user_dict[k]
 
         for k in UserModel.sensivity_fields:
             user_model[k] = SensivityField(fernet=self.fernet, data=user_dict[k])
 
         user_model.password = bcrypt.hashpw(f'{user.password}'.encode(), bcrypt.gensalt()).decode()
+
+        if user.tipo == "Pessoa":
+            user_model.cpf = user_dict["cpf"]
+            user_model.cnpj = None
+        elif user.tipo == "Empresa":
+            user_model.cnpj = user_dict["cnpj"]
+            user_model.cpf = None
 
         user_model.save()
 
@@ -69,6 +75,17 @@ class UsersRepository:
         if user:
             return user.cpf
         
+    def get_cnpj(self, id: str) -> str:
+        user = UserModel.objects(id=id).first()
+        if user:
+            return user.cnpj
+        
+    def find_by_cpf(self, cpf: str) -> Optional[UserModel]:
+        return UserModel.objects(cpf=cpf).first()
+
+    def find_by_cnpj(self, cnpj: str) -> Optional[UserModel]:
+        return UserModel.objects(cnpj=cnpj).first()
+        
     def get_phone(self, id: str) -> str:
         user = UserModel.objects(id=id).first()
         if user:
@@ -79,6 +96,11 @@ class UsersRepository:
         if user:
 
             return self.fernet.decrypt(user.password).decode()
+        
+    def get_tipo(self, id: str) -> str:
+        user = UserModel.objects(id=id).first()
+        if user:
+            return user.tipo
     
     def update_name(self, id: str, name: str) -> None:
         UserModel.objects(id=id).update(set__name = name)
@@ -95,3 +117,18 @@ class UsersRepository:
     def update_phone(self, id: str, phone: str) -> None:
         UserModel.objects(id=id).update(set__phone = phone)
         return None
+
+    
+    def get_all_users(self) -> List[dict]:
+        users = UserModel.objects
+        users_dict = [user.to_mongo().to_dict() for user in users]
+        for user in users_dict:
+            user['_id'] = str(user['_id'])
+        return users_dict
+
+    def delete_user_by_id(self, user_id: str) -> bool:
+        user = UserModel.objects.with_id(user_id)
+        if not user:
+            return False
+        user.delete()
+        return True
