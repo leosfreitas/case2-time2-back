@@ -48,12 +48,12 @@ class SendPwdRecoveryEmailUseCase:
             }
         
         # 2) Verifica se o token foi enviado há menos de 1h
-        # if found_user.reset_pwd_token_sent_at + 3600 > datetime.now().timestamp():
-        #     response.status_code = 400
-        #     return {
-        #         "status": "error", 
-        #         "message": "Você pode solicitar o link para redefinir sua senha a cada 1 hora."
-        #     }
+        if found_user.reset_pwd_token_sent_at + 3600 > datetime.now().timestamp():
+            response.status_code = 400
+            return {
+                "status": "error", 
+                "message": "Você pode solicitar o link para redefinir sua senha a cada 1 hora."
+            }
         
         # 3) Gera token e atualiza no repositório correto
         token = str(uuid.uuid4())
